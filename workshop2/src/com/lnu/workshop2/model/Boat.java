@@ -2,12 +2,27 @@ package com.lnu.workshop2.model;
 
 public class Boat {
 
+	private int id;
 	private int length;
 	private String type;
-	public enum boatType {
+	public static enum boatType {
 		sailboat, MotorSailor, Kayak, Other 
 	}
 	
+	public Boat(int id, String type, int length) {
+		this.id = id;
+		this.type = type;
+		this.length = length;
+	}
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public Boat(String type) {
 		this.type = type;
 	}
@@ -26,8 +41,7 @@ public class Boat {
 
 	public void setType(String type) {
 		this.type = type;
-	}
-	
+	}	
 	
 }
 

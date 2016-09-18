@@ -7,6 +7,7 @@ import java.util.Random;
 
 import org.apache.log4j.Logger;
 
+import com.lnu.workshop2.model.Boat;
 import com.lnu.workshop2.model.Member;
 
 /*
@@ -19,6 +20,7 @@ public class MemberRegistry {
 	
 	final static Logger logger = Logger.getLogger(MemberRegistry.class);
 	private List<Member> memberList = new ArrayList<Member>();
+	private Random rand = new Random();
 	
 	private MemberRegistry() {
 	}
@@ -29,13 +31,21 @@ public class MemberRegistry {
 	
 	// Add member and generate ID
 	public Member addMember(String name, int personalNumber) {
-		Random rand = new Random();
 		int id = rand.nextInt(50) + 1;
 		Member member= new Member(id, name, personalNumber);
 		memberList.add(member);
 		logger.info("Member with id: " + id + " added to registry");
 		return member;
 	}
+	
+	public Boat addBoatToMember(int memberId, String type, int length) {
+		int id = rand.nextInt(50) + 1;
+		Boat boat = new Boat(id, type, length);
+		retrieveMember(memberId).addBoat(boat);
+		logger.info("Boat: " + boat.toString() + " added to member with id: " + memberId);
+		return boat;
+	}
+	
 	
 	// Retrieve member
 	public Member retrieveMember(int id) {
@@ -69,6 +79,11 @@ public class MemberRegistry {
 		return null;
 	}
 	
+	// Update member
+	public Boat updateBoatInformationForMember(int memberId, int boatId, String boatType, int length) {
+		return this.retrieveMember(memberId).updateBoat(boatId, boatType, length);
+	}
+	
 	// Delete member
 	public void deleteMember(int id) {
 		Iterator<Member> it = memberList.iterator();
@@ -76,10 +91,15 @@ public class MemberRegistry {
 		  Member member = it.next();
 		  if (member.getId() == id) {
 		    it.remove();
+		    logger.warn("Member with id: " + id + " removed from registry");
 		    return;
 		  }
 		}
 		logger.warn("Unable to delete member with id: " + id);
+	}
+	
+	public void deleteBoatFromMember(int memberId, int boatId) {
+		this.retrieveMember(memberId).removeBoat(boatId);
 	}
 	
 }
