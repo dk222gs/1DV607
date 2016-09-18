@@ -106,14 +106,26 @@ public class MemberRegistry {
 		StringBuilder builder = new StringBuilder();
 		if(verbose) {
 			for (Member member: memberList) {
-			    builder.append("Member name: " + member.getName() + 
-			    		" memberId: " + member.getId() + 
-			    		" nr of boats: " + member.getBoats().size());
+			    builder.append("Member name: " + member.getName()); 
+			    builder.append(" personal number: " + member.getPersonalNumber());
+			    builder.append(" memberId: " + member.getId());
+			    builder.append(System.getProperty("line.separator"));
+			    List<Boat> boatList = member.getBoats();
+			    for (Boat boat: boatList) {
+			    	builder.append("- Boat id: " + boat.getId());
+			    	builder.append("-    type: " + boat.getType());
+			    	builder.append("-  length: " + boat.getLength());
+			    }
 			}
-			builder.append("/n");
 			return builder.toString();
 		} else {
-			return this.toString();
+			for (Member member: memberList) {
+			    builder.append("Member name: " + member.getName());
+			    builder.append(" memberId: " + member.getId()); 
+			    builder.append(" boats: " + member.getBoats().size());
+			    builder.append(System.getProperty("line.separator"));
+			}
+			return builder.toString();
 		}
 	}
 	
