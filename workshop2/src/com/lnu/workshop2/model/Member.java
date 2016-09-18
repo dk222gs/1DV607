@@ -6,10 +6,10 @@ public class Member {
 	private int personalNumber;
 	private int id;
 	
-	public Member(String name, int peronalNumber, int id) {
+	public Member(int id, String name, int peronalNumber) {
+		this.id = id;
 		this.name = name;
 		this.personalNumber = personalNumber;
-		this.id = id;
 	}
 
 	public String getName() {

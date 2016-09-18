@@ -3,8 +3,10 @@ package com.lnu.workshop2.controller;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Random;
 
 import org.apache.log4j.Logger;
+
 import com.lnu.workshop2.model.Member;
 
 /*
@@ -13,11 +15,26 @@ import com.lnu.workshop2.model.Member;
  */
 public class MemberRegistry {
 
+	private static MemberRegistry INSTANCE = new MemberRegistry();
+	
 	final static Logger logger = Logger.getLogger(MemberRegistry.class);
 	private List<Member> memberList = new ArrayList<Member>();
 	
-	public void addMember(Member member) {
+	private MemberRegistry() {
+	}
+	
+	public static MemberRegistry getInstance() {
+		return INSTANCE;
+	}
+	
+	// Add member and generate ID
+	public Member addMember(String name, int personalNumber) {
+		Random rand = new Random();
+		int id = rand.nextInt(50) + 1;
+		Member member= new Member(id, name, personalNumber);
 		memberList.add(member);
+		logger.info("Member with id: " + id + " added to registry");
+		return member;
 	}
 	
 	// Retrieve member
