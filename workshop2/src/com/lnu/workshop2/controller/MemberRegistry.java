@@ -102,4 +102,19 @@ public class MemberRegistry {
 		this.retrieveMember(memberId).removeBoat(boatId);
 	}
 	
+	public String toString(boolean verbose) {
+		StringBuilder builder = new StringBuilder();
+		if(verbose) {
+			for (Member member: memberList) {
+			    builder.append("Member name: " + member.getName() + 
+			    		" memberId: " + member.getId() + 
+			    		" nr of boats: " + member.getBoats().size());
+			}
+			builder.append("/n");
+			return builder.toString();
+		} else {
+			return this.toString();
+		}
+	}
+	
 }

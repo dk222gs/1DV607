@@ -83,4 +83,5 @@ public class Member {
 		logger.warn("Unable to delete boat with id: " + boatId);
 	}
 	
+	
 }

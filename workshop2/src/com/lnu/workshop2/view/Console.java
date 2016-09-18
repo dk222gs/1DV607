@@ -19,13 +19,19 @@ public class Console
         System.out.println("Press 4 to add a boat to member");
         System.out.println("Press 5 to remove a boat from member");
         System.out.println("Press 6 to update information for a members boat");
+        System.out.println("Press 7 to view a list of all members “Compact List”; name, member id and number of boats");
+        System.out.println("Press 8 to view a list of all members “Verbose List”; name, personal number, "
+        		+ "member id and boats with boat information");
         
     }
 
     public static void main(String[] args) throws IOException {
     	// create a scanner so we can read the command-line input
         Scanner scanner = new Scanner(System.in);
-        
+    	consoleUI(scanner);
+    }
+    
+    public static void consoleUI(Scanner scanner) {
         // promt for option
         usage();
 
@@ -89,12 +95,13 @@ public class Console
 	            int length = scanner.nextInt();
 	            memberRegistry.addBoatToMember(memberId, boatType, length);
 	            break;
+	        } case 7 : {
+	        	System.out.println(memberRegistry.toString(false));
+	        } case 8 : {
+	        	System.out.println(memberRegistry.toString(true));
 	        }
         }
-        
-        scanner.close();
-       
-
+        consoleUI(scanner);
     }
     
 }
