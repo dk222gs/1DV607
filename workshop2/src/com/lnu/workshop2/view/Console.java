@@ -3,12 +3,15 @@ package com.lnu.workshop2.view;
 import java.io.IOException;
 import java.util.Scanner;
 
+import org.apache.log4j.Logger;
+
 import com.lnu.workshop2.controller.MemberRegistry;
 import com.lnu.workshop2.model.Boat;
 
 public class Console
 {
 	private static MemberRegistry memberRegistry = MemberRegistry.getInstance();
+	final static Logger logger = Logger.getLogger(Console.class);
 	
     public static void usage() {
         System.out.println("Welcome to the member registry");
@@ -22,12 +25,13 @@ public class Console
         System.out.println("Press 7 to view a list of all members “Compact List”; name, member id and number of boats");
         System.out.println("Press 8 to view a list of all members “Verbose List”; name, personal number, "
         		+ "member id and boats with boat information");
+        System.out.println("Press 9 exit and save registry");
         
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException {    	
     	// create a scanner so we can read the command-line input
-        Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);        
     	consoleUI(scanner);
     }
     
@@ -99,9 +103,13 @@ public class Console
 	        	System.out.println(memberRegistry.toString(false));
 	        } case 8 : {
 	        	System.out.println(memberRegistry.toString(true));
+	        } case 9 : {
+	        	memberRegistry.storeMemberList();
+	        	System.exit(0);
 	        }
         }
+        
         consoleUI(scanner);
     }
-    
+   
 }

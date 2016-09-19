@@ -1,13 +1,15 @@
 package com.lnu.workshop2.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 
-public class Member {
+public class Member implements Serializable{
 
+	private static final long serialVersionUID = 5147139429462215320L;
 	private String name;
 	private int personalNumber;
 	private int id;

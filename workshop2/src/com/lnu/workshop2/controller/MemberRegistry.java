@@ -1,5 +1,7 @@
 package com.lnu.workshop2.controller;
 
+import java.io.File;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -14,15 +16,21 @@ import com.lnu.workshop2.model.Member;
  * Handle everything in memory and save when application exists
  *
  */
-public class MemberRegistry {
+public class MemberRegistry implements Serializable{
 
+	private static final long serialVersionUID = -1384776970816710748L;
 	private static MemberRegistry INSTANCE = new MemberRegistry();
 	
 	final static Logger logger = Logger.getLogger(MemberRegistry.class);
 	private List<Member> memberList = new ArrayList<Member>();
+	private PersistanceManager persistanceManager = new PersistanceManager();
 	private Random rand = new Random();
 	
 	private MemberRegistry() {
+		File f = new File(CommonProperties.serializableFilePath);
+		if(f.exists()) { 
+		    memberList = persistanceManager.getMemberList();
+		}
 	}
 	
 	public static MemberRegistry getInstance() {
@@ -100,6 +108,11 @@ public class MemberRegistry {
 	
 	public void deleteBoatFromMember(int memberId, int boatId) {
 		this.retrieveMember(memberId).removeBoat(boatId);
+	}
+	
+	public void storeMemberList() {
+		PersistanceManager persistanceManager = new PersistanceManager();
+		persistanceManager.storeObjectToFile(memberList);
 	}
 	
 	public String toString(boolean verbose) {

@@ -1,7 +1,10 @@
 package com.lnu.workshop2.model;
 
-public class Boat {
+import java.io.Serializable;
 
+public class Boat implements Serializable{
+
+	private static final long serialVersionUID = -257796160740329210L;
 	private int id;
 	private int length;
 	private String type;
