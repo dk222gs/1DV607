@@ -25,6 +25,7 @@ public class MemberRegistry implements Serializable{
 	private List<Member> memberList = new ArrayList<Member>();
 	private PersistanceManager persistanceManager = new PersistanceManager();
 	private Random rand = new Random();
+	public boolean loggedIn = false;
 	
 	private MemberRegistry() {
 		File f = new File(CommonProperties.serializableFilePath);
@@ -39,21 +40,31 @@ public class MemberRegistry implements Serializable{
 	
 	// Add member and generate ID
 	public Member addMember(String name, int personalNumber) {
-		int id = rand.nextInt(50) + 1;
-		Member member= new Member(id, name, personalNumber);
-		memberList.add(member);
-		logger.info("Member with id: " + id + " added to registry");
-		return member;
+		if(loggedIn) {
+			int id = rand.nextInt(50) + 1;
+			Member member= new Member(id, name, personalNumber);
+			memberList.add(member);
+			logger.info("Member with id: " + id + " added to registry");
+			return member;
+		} else {
+			logger.warn("Log in as admin to create new members");
+			return null;
+		}
 	}
 	
 	public Boat addBoatToMember(int memberId, String type, int length) {
-		if(validateBoatType(type)) {
-			int id = rand.nextInt(50) + 1;
-			Boat boat = new Boat(id, type, length);
-			retrieveMember(memberId).addBoat(boat);
-			logger.info("Boat: " + boat.getType() + " added to member with id: " + memberId);
-			return boat;
+		if(loggedIn) {
+			if(validateBoatType(type)) {
+				int id = rand.nextInt(50) + 1;
+				Boat boat = new Boat(id, type, length);
+				retrieveMember(memberId).addBoat(boat);
+				logger.info("Boat: " + boat.getType() + " added to member with id: " + memberId);
+				return boat;
+			} else {
+				return null;
+			}
 		} else {
+			logger.warn("Log in as admin to add boats to members");
 			return null;
 		}
 	}
@@ -72,50 +83,68 @@ public class MemberRegistry implements Serializable{
 	
 	// Update member
 	public Member updateMember(int id, String name, int personalNumber) {
-		for(int i=0;i<this.memberList.size();i++){
-	        if(this.memberList.get(i).getId() == id){
-	            if(personalNumber != 0) {
-	            	logger.info("Updating personalNumber from: " + this.memberList.get(i).getPersonalNumber() +
-	            			" to: " + personalNumber + " for member with id: " + this.memberList.get(i).getId());
-	            	this.memberList.get(i).setPersonalNumber(personalNumber);
-	            }
-	            if(name != null) {
-	            	logger.info("Updating name from: " + this.memberList.get(i).getName() +
-	            			" to: " + name + " for member with id: " + this.memberList.get(i).getId());
-	            	this.memberList.get(i).setName(name);
-	            }
-	            return this.memberList.get(i);
-	        }
+		if(loggedIn) {
+			for(int i=0;i<this.memberList.size();i++){
+		        if(this.memberList.get(i).getId() == id){
+		            if(personalNumber != 0) {
+		            	logger.info("Updating personalNumber from: " + this.memberList.get(i).getPersonalNumber() +
+		            			" to: " + personalNumber + " for member with id: " + this.memberList.get(i).getId());
+		            	this.memberList.get(i).setPersonalNumber(personalNumber);
+		            }
+		            if(name != null) {
+		            	logger.info("Updating name from: " + this.memberList.get(i).getName() +
+		            			" to: " + name + " for member with id: " + this.memberList.get(i).getId());
+		            	this.memberList.get(i).setName(name);
+		            }
+		            return this.memberList.get(i);
+		        }
+			}
+			logger.warn("No member found with id: " + id);
+			return null;
+		} else {
+			logger.warn("Log in as admin to update members");
+			return null;
 		}
-		logger.warn("No member found with id: " + id);
-		return null;
 	}
 	
-	// Update member
+	// Update boat information for member
 	public Boat updateBoatInformationForMember(int memberId, int boatId, String boatType, int length) {
-		if(validateBoatType(boatType)) {
-			return this.retrieveMember(memberId).updateBoat(boatId, boatType, length);
+		if(loggedIn) {
+			if(validateBoatType(boatType)) {
+				return this.retrieveMember(memberId).updateBoat(boatId, boatType, length);
+			} else {
+				return null;
+			}
 		} else {
+			logger.warn("Log in as admin to update boat information");
 			return null;
 		}
 	}
 	
 	// Delete member
 	public void deleteMember(int id) {
-		Iterator<Member> it = memberList.iterator();
-		while (it.hasNext()) {
-		  Member member = it.next();
-		  if (member.getId() == id) {
-		    it.remove();
-		    logger.warn("Member with id: " + id + " removed from registry");
-		    return;
-		  }
+		if(loggedIn) {
+			Iterator<Member> it = memberList.iterator();
+			while (it.hasNext()) {
+			  Member member = it.next();
+			  if (member.getId() == id) {
+			    it.remove();
+			    logger.warn("Member with id: " + id + " removed from registry");
+			    return;
+			  }
+			}
+			logger.warn("Unable to delete member with id: " + id);
+		} else {
+			logger.warn("Log in as admin to delete members from registry");
 		}
-		logger.warn("Unable to delete member with id: " + id);
 	}
 	
 	public void deleteBoatFromMember(int memberId, int boatId) {
-		this.retrieveMember(memberId).removeBoat(boatId);
+		if(loggedIn) {
+			this.retrieveMember(memberId).removeBoat(boatId);
+		} else {
+			logger.warn("Log in as admin to delete boats from members");
+		}
 	}
 	
 	public void storeMemberList() {

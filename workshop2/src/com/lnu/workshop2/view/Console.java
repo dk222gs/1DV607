@@ -5,11 +5,13 @@ import java.util.Scanner;
 
 import org.apache.log4j.Logger;
 
+import com.lnu.workshop2.controller.CommonProperties;
 import com.lnu.workshop2.controller.MemberRegistry;
 import com.lnu.workshop2.model.Boat;
 
 public class Console
 {
+	
 	private static MemberRegistry memberRegistry = MemberRegistry.getInstance();
 	final static Logger logger = Logger.getLogger(Console.class);
 	
@@ -31,8 +33,29 @@ public class Console
 
     public static void main(String[] args) throws IOException {    	
     	// create a scanner so we can read the command-line input
-        Scanner scanner = new Scanner(System.in);        
+        Scanner scanner = new Scanner(System.in);
+        loginPromt(scanner);
     	consoleUI(scanner);
+    }
+    
+    public static void loginPromt(Scanner scanner) {
+    	System.out.println("Welcome to this awesome application");
+    	System.out.println("Do you wish to log in as admin or continue ad guest?");
+    	System.out.println("Enter guest or admin");
+    	String user = scanner.next();
+    	if(user.equals("guest")) {
+    		return;
+    	} else if(user.equals("admin")) {
+    		System.out.println("Enter password for user admin:");
+    		String pass = scanner.next();
+    		if(pass.equals(CommonProperties.adminUserPassword)) {
+    			memberRegistry.loggedIn = true;
+    			logger.warn("You are now logged in as admin");
+    		} else {
+    			logger.warn("Wrong password, continuing as guest");
+    			return;
+    		}
+    	}
     }
     
     public static void consoleUI(Scanner scanner) {
