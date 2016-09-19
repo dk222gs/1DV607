@@ -117,6 +117,7 @@ public class MemberRegistry implements Serializable{
 	
 	public String toString(boolean verbose) {
 		StringBuilder builder = new StringBuilder();
+		
 		if(verbose) {
 			for (Member member: memberList) {
 			    builder.append("Member name: " + member.getName()); 

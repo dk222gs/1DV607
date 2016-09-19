@@ -101,11 +101,14 @@ public class Console
 	            break;
 	        } case 7 : {
 	        	System.out.println(memberRegistry.toString(false));
+	        	break;
 	        } case 8 : {
 	        	System.out.println(memberRegistry.toString(true));
+	        	break;
 	        } case 9 : {
 	        	memberRegistry.storeMemberList();
 	        	System.exit(0);
+	        	break;
 	        }
         }
         
