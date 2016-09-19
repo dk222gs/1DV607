@@ -47,11 +47,15 @@ public class MemberRegistry implements Serializable{
 	}
 	
 	public Boat addBoatToMember(int memberId, String type, int length) {
-		int id = rand.nextInt(50) + 1;
-		Boat boat = new Boat(id, type, length);
-		retrieveMember(memberId).addBoat(boat);
-		logger.info("Boat: " + boat.toString() + " added to member with id: " + memberId);
-		return boat;
+		if(validateBoatType(type)) {
+			int id = rand.nextInt(50) + 1;
+			Boat boat = new Boat(id, type, length);
+			retrieveMember(memberId).addBoat(boat);
+			logger.info("Boat: " + boat.getType() + " added to member with id: " + memberId);
+			return boat;
+		} else {
+			return null;
+		}
 	}
 	
 	
@@ -72,12 +76,12 @@ public class MemberRegistry implements Serializable{
 	        if(this.memberList.get(i).getId() == id){
 	            if(personalNumber != 0) {
 	            	logger.info("Updating personalNumber from: " + this.memberList.get(i).getPersonalNumber() +
-	            			"to: " + personalNumber + " for member with id: " + this.memberList.get(i).getId());
+	            			" to: " + personalNumber + " for member with id: " + this.memberList.get(i).getId());
 	            	this.memberList.get(i).setPersonalNumber(personalNumber);
 	            }
 	            if(name != null) {
 	            	logger.info("Updating name from: " + this.memberList.get(i).getName() +
-	            			"to: " + name + " for member with id: " + this.memberList.get(i).getId());
+	            			" to: " + name + " for member with id: " + this.memberList.get(i).getId());
 	            	this.memberList.get(i).setName(name);
 	            }
 	            return this.memberList.get(i);
@@ -89,7 +93,11 @@ public class MemberRegistry implements Serializable{
 	
 	// Update member
 	public Boat updateBoatInformationForMember(int memberId, int boatId, String boatType, int length) {
-		return this.retrieveMember(memberId).updateBoat(boatId, boatType, length);
+		if(validateBoatType(boatType)) {
+			return this.retrieveMember(memberId).updateBoat(boatId, boatType, length);
+		} else {
+			return null;
+		}
 	}
 	
 	// Delete member
@@ -115,6 +123,18 @@ public class MemberRegistry implements Serializable{
 		persistanceManager.storeObjectToFile(memberList);
 	}
 	
+	private boolean validateBoatType(String type) {
+		if(type.equalsIgnoreCase(Boat.boatType.Sailboat.toString()) || type.equalsIgnoreCase(Boat.boatType.Kayak.toString()) || 
+				type.equalsIgnoreCase(Boat.boatType.MotorSailor.toString()) || type.equalsIgnoreCase(Boat.boatType.Other.toString())) {
+			return true;
+		} else {
+			logger.warn("Invalid boat type entered " + type + ", please add one of the types (" + 
+					Boat.boatType.Sailboat + ", " + Boat.boatType.Kayak + ", " + Boat.boatType.MotorSailor + 
+					" or " + Boat.boatType.Other + ")");
+			return false;
+		}
+	}
+	
 	public String toString(boolean verbose) {
 		StringBuilder builder = new StringBuilder();
 		
@@ -127,8 +147,11 @@ public class MemberRegistry implements Serializable{
 			    List<Boat> boatList = member.getBoats();
 			    for (Boat boat: boatList) {
 			    	builder.append("- Boat id: " + boat.getId());
-			    	builder.append("-    type: " + boat.getType());
-			    	builder.append("-  length: " + boat.getLength());
+			    	builder.append(System.getProperty("line.separator"));
+			    	builder.append("  Type: " + boat.getType());
+			    	builder.append(System.getProperty("line.separator"));
+			    	builder.append("  Length: " + boat.getLength());
+			    	builder.append(System.getProperty("line.separator"));
 			    }
 			}
 			return builder.toString();

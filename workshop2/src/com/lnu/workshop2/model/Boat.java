@@ -9,7 +9,7 @@ public class Boat implements Serializable{
 	private int length;
 	private String type;
 	public static enum boatType {
-		sailboat, MotorSailor, Kayak, Other 
+		Sailboat, MotorSailor, Kayak, Other 
 	}
 	
 	public Boat(int id, String type, int length) {
