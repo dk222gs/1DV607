@@ -171,6 +171,9 @@ public class MemberRegistry implements Serializable{
 	        	foundMembers.add(member);
 		    }
 		}
+		if(foundMembers.isEmpty()) {
+			logger.warn("No member found with name that starts with: " + searchString);
+		}
 		return this.toString(false, foundMembers);
 	}
 	
