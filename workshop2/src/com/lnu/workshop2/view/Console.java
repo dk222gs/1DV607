@@ -28,6 +28,7 @@ public class Console
         System.out.println("Press 8 to view a list of all members “Verbose List”; name, personal number, "
         		+ "member id and boats with boat information");
         System.out.println("Press 9 exit and save registry");
+        System.out.println("Press 10 search for member");
         
     }
 
@@ -123,14 +124,19 @@ public class Console
 	            memberRegistry.updateBoatInformationForMember(memberId, boatId, boatType, length);
 	            break;
 	        } case 7 : {
-	        	System.out.println(memberRegistry.toString(false));
+	        	System.out.println(memberRegistry.toString(false, null));
 	        	break;
 	        } case 8 : {
-	        	System.out.println(memberRegistry.toString(true));
+	        	System.out.println(memberRegistry.toString(true, null));
 	        	break;
 	        } case 9 : {
 	        	memberRegistry.storeMemberList();
 	        	System.exit(0);
+	        	break;
+	        } case 10 : {
+	        	System.out.print("Enter search string for member name, it can be one letter or the complete name:");
+	        	String searchString = scanner.next();
+	        	System.out.println(memberRegistry.searchMembersBasedOnNames(searchString));
 	        	break;
 	        }
         }

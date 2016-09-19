@@ -164,11 +164,27 @@ public class MemberRegistry implements Serializable{
 		}
 	}
 	
-	public String toString(boolean verbose) {
+	public String searchMembersBasedOnNames(String searchString) {
+		List<Member> foundMembers = new ArrayList<Member>();
+		for(Member member : memberList) {
+	        if(member.getName() != null && member.getName().startsWith(searchString)) {
+	        	foundMembers.add(member);
+		    }
+		}
+		return this.toString(false, foundMembers);
+	}
+	
+	public String toString(boolean verbose, List<Member> searchList) {
 		StringBuilder builder = new StringBuilder();
+		List<Member> localMemberList;
+		if(searchList == null) {
+			localMemberList = memberList;
+		} else {
+			localMemberList = searchList;
+		}
 		
 		if(verbose) {
-			for (Member member: memberList) {
+			for (Member member: localMemberList) {
 			    builder.append("Member name: " + member.getName()); 
 			    builder.append(" personal number: " + member.getPersonalNumber());
 			    builder.append(" memberId: " + member.getId());
@@ -185,7 +201,7 @@ public class MemberRegistry implements Serializable{
 			}
 			return builder.toString();
 		} else {
-			for (Member member: memberList) {
+			for (Member member: localMemberList) {
 			    builder.append("Member name: " + member.getName());
 			    builder.append(" memberId: " + member.getId()); 
 			    builder.append(" boats: " + member.getBoats().size());
