@@ -16,19 +16,19 @@ public class Console
 	final static Logger logger = Logger.getLogger(Console.class);
 	
     public static void usage() {
-        System.out.println("Welcome to the member registry");
-        System.out.println("Usage: ");
-        System.out.println("Press 1 to create a member");
-        System.out.println("Press 2 to update a member");
-        System.out.println("Press 3 to delete a member");
-        System.out.println("Press 4 to add a boat to member");
-        System.out.println("Press 5 to remove a boat from member");
-        System.out.println("Press 6 to update information for a members boat");
-        System.out.println("Press 7 to view a list of all members “Compact List”; name, member id and number of boats");
-        System.out.println("Press 8 to view a list of all members “Verbose List”; name, personal number, "
+        System.out.println("- Welcome to the member registry");
+        System.out.println("-- Usage: ");
+        System.out.println("-- Press 1 to create a member");
+        System.out.println("-- Press 2 to update a member");
+        System.out.println("-- Press 3 to delete a member");
+        System.out.println("-- Press 4 to add a boat to member");
+        System.out.println("-- Press 5 to remove a boat from member");
+        System.out.println("-- Press 6 to update information for a members boat");
+        System.out.println("-- Press 7 to view a list of all members “Compact List”; name, member id and number of boats");
+        System.out.println("-- Press 8 to view a list of all members “Verbose List”; name, personal number, "
         		+ "member id and boats with boat information");
-        System.out.println("Press 9 exit and save registry");
-        System.out.println("Press 10 search for member");
+        System.out.println("-- Press 9 exit and save registry");
+        System.out.println("-- Press 10 search for member");
         
     }
 
