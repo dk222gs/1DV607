@@ -47,7 +47,7 @@ public class MemberRegistry implements Serializable{
 			logger.info("Member with id: " + id + " added to registry");
 			return member;
 		} else {
-			logger.warn("Log in as admin to create new members");
+			logger.warn("Warning: Login as admin to create new members");
 			return null;
 		}
 	}

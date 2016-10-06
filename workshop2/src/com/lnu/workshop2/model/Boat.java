@@ -26,10 +26,6 @@ public class Boat implements Serializable{
 		this.id = id;
 	}
 
-	public Boat(String type) {
-		this.type = type;
-	}
-
 	public int getLength() {
 		return length;
 	}
