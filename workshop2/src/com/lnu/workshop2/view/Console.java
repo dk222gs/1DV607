@@ -64,81 +64,88 @@ public class Console
         usage();
 
         // get user input as a int
-        int option = scanner.nextInt();
+        try {
+        	int option = scanner.nextInt();
 
-        switch(option) {
-	        case 1 : {
-	        	// Create a member
-	            System.out.print("Enter member name: ");
-	            String name = scanner.next();
-	            System.out.print("Enter member personal number: ");
-	            int personalNumber = scanner.nextInt();
-	            memberRegistry.addMember(name, personalNumber);
-	            break;
-	        } case 2: {
-	        	// Update a member
-	            System.out.print("Enter id of the member to update: ");
-	            int id = scanner.nextInt();
-	            System.out.print("Enter new member name(leave blank for default): ");
-	            String name = scanner.next();
-	            System.out.print("Enter new member personal number(leave blank for default): ");
-	            int personalNumber = scanner.nextInt();
-	            memberRegistry.updateMember(id, name, personalNumber);
-	            break;
-	        } case 3 : {
-	        	// Delete a member
-	            System.out.print("Enter id of the member to delete: ");
-	            int id = scanner.nextInt();
-	            memberRegistry.deleteMember(id);
-	            break;
-	        } case 4 : {
-	        	// Register a new boat to member
-	        	System.out.print("Enter id of the member to register the new boat to: ");
-	            int memberId = scanner.nextInt();
-	            System.out.print("Enter new boat type(" + Boat.boatType.Sailboat + ", "
-	            		+ Boat.boatType.Kayak + ", " + Boat.boatType.MotorSailor + " or " 
-	            		+ Boat.boatType.Other + ")");
-	            String boatType = scanner.next();
-	            System.out.print("Enter new boat length: ");
-	            int length = scanner.nextInt();
-	            memberRegistry.addBoatToMember(memberId, boatType, length);
-	            break;
-	        } case 5 : {
-	        	// Remove a boat from a member
-	            System.out.print("Enter id of the member to remove a boat from: ");
-	            int memberId = scanner.nextInt();
-	            System.out.print("Enter id of the boat to remove from member: ");
-	            int boatId = scanner.nextInt();
-	            memberRegistry.deleteBoatFromMember(memberId, boatId);
-	            break;
-	        } case 6 : {
-	        	// Update a boat registered to a member
-	        	System.out.print("Enter id of the member to that owns the boat that needs updated information: ");
-	            int memberId = scanner.nextInt();
-	            System.out.print("Enter id of the boat to update: ");
-	            int boatId = scanner.nextInt();
-	            System.out.print("Enter new boat type(leave blank for default): ");
-	            String boatType = scanner.next();
-	            System.out.print("Enter new boat length(leave blank for default): ");
-	            int length = scanner.nextInt();
-	            memberRegistry.updateBoatInformationForMember(memberId, boatId, boatType, length);
-	            break;
-	        } case 7 : {
-	        	System.out.println(memberRegistry.toString(false, null));
-	        	break;
-	        } case 8 : {
-	        	System.out.println(memberRegistry.toString(true, null));
-	        	break;
-	        } case 9 : {
-	        	memberRegistry.storeMemberList();
-	        	System.exit(0);
-	        	break;
-	        } case 10 : {
-	        	System.out.print("Enter search string for member name, it can be one letter or the complete name:");
-	        	String searchString = scanner.next();
-	        	System.out.println(memberRegistry.searchMembersBasedOnNames(searchString));
-	        	break;
+	        switch(option) {
+		        case 1 : {
+		        	// Create a member
+		            System.out.print("Enter member name: ");
+		            String name = scanner.next();
+		            System.out.print("Enter member personal number: ");
+		            int personalNumber = scanner.nextInt();
+		            memberRegistry.addMember(name, personalNumber);
+		            break;
+		        } case 2: {
+		        	// Update a member
+		            System.out.print("Enter id of the member to update: ");
+		            int id = scanner.nextInt();
+		            System.out.print("Enter new member name(leave blank for default): ");
+		            String name = scanner.next();
+		            System.out.print("Enter new member personal number(leave blank for default): ");
+		            int personalNumber = scanner.nextInt();
+		            memberRegistry.updateMember(id, name, personalNumber);
+		            break;
+		        } case 3 : {
+		        	// Delete a member
+		            System.out.print("Enter id of the member to delete: ");
+		            int id = scanner.nextInt();
+		            memberRegistry.deleteMember(id);
+		            break;
+		        } case 4 : {
+		        	// Register a new boat to member
+		        	System.out.print("Enter id of the member to register the new boat to: ");
+		            int memberId = scanner.nextInt();
+		            System.out.print("Enter new boat type(" + Boat.boatType.Sailboat + ", "
+		            		+ Boat.boatType.Kayak + ", " + Boat.boatType.MotorSailor + " or " 
+		            		+ Boat.boatType.Other + ")");
+		            String boatType = scanner.next();
+		            System.out.print("Enter new boat length: ");
+		            int length = scanner.nextInt();
+		            memberRegistry.addBoatToMember(memberId, boatType, length);
+		            break;
+		        } case 5 : {
+		        	// Remove a boat from a member
+		            System.out.print("Enter id of the member to remove a boat from: ");
+		            int memberId = scanner.nextInt();
+		            System.out.print("Enter id of the boat to remove from member: ");
+		            int boatId = scanner.nextInt();
+		            memberRegistry.deleteBoatFromMember(memberId, boatId);
+		            break;
+		        } case 6 : {
+		        	// Update a boat registered to a member
+		        	System.out.print("Enter id of the member to that owns the boat that needs updated information: ");
+		            int memberId = scanner.nextInt();
+		            System.out.print("Enter id of the boat to update: ");
+		            int boatId = scanner.nextInt();
+		            System.out.print("Enter new boat type(leave blank for default): ");
+		            String boatType = scanner.next();
+		            System.out.print("Enter new boat length(leave blank for default): ");
+		            int length = scanner.nextInt();
+		            memberRegistry.updateBoatInformationForMember(memberId, boatId, boatType, length);
+		            break;
+		        } case 7 : {
+		        	System.out.println(memberRegistry.toString(false, null));
+		        	break;
+		        } case 8 : {
+		        	System.out.println(memberRegistry.toString(true, null));
+		        	break;
+		        } case 9 : {
+		        	memberRegistry.storeMemberList();
+		        	System.exit(0);
+		        	break;
+		        } case 10 : {
+		        	System.out.print("Enter search string for member name, it can be one letter or the complete name:");
+		        	String searchString = scanner.next();
+		        	System.out.println(memberRegistry.searchMembersBasedOnNames(searchString));
+		        	break;
+		        } default: {
+		        	System.out.println("Input not valid, enter a number between 1-10");
+		        }
 	        }
+        } catch (Exception e) {
+        	System.out.println("Input not valid: " + e);
+        	scanner.next();
         }
         
         consoleUI(scanner);

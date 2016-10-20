@@ -1,0 +1,5 @@
+Fixed following bugs after review:
+
+- In the main menu, if a number is not entered the program will crash. Example letter a.
+- Members can get the same member id.
+- Program will crash if the user try to add a boat to a member id that do not exist.

@@ -41,7 +41,7 @@ public class MemberRegistry implements Serializable{
 	// Add member and generate ID
 	public Member addMember(String name, int personalNumber) {
 		if(loggedIn) {
-			int id = rand.nextInt(50) + 1;
+			int id = generateMemberId();
 			Member member= new Member(id, name, personalNumber);
 			memberList.add(member);
 			logger.info("Member with id: " + id + " added to registry");
@@ -57,9 +57,14 @@ public class MemberRegistry implements Serializable{
 			if(validateBoatType(type)) {
 				int id = rand.nextInt(50) + 1;
 				Boat boat = new Boat(id, type, length);
-				retrieveMember(memberId).addBoat(boat);
-				logger.info("Boat: " + boat.getType() + " added to member with id: " + memberId);
-				return boat;
+				Member member = retrieveMember(memberId);
+				if(member !=null) {
+					member.addBoat(boat);
+					logger.info("Boat: " + boat.getType() + " added to member with id: " + memberId);
+					return boat;
+				} else {
+					return null;
+				}
 			} else {
 				return null;
 			}
@@ -212,6 +217,18 @@ public class MemberRegistry implements Serializable{
 			}
 			return builder.toString();
 		}
+	}
+	
+	private int generateMemberId() {
+		int id = 0;
+		boolean uniqueIdFound = false;
+		while(!uniqueIdFound) {
+			id = rand.nextInt(50) + 1;
+			if(!memberList.contains(id))	{
+				uniqueIdFound= true;
+			}
+		}
+		return id;
 	}
 	
 }
